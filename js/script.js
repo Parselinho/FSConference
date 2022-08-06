@@ -2,19 +2,26 @@
  const passwordInput = document.querySelector('#cc-num');
  const telephoneInput = document.querySelector('#cvv');
  const emailInput = document.querySelector('#email');
- const title = document.querySelector('#title')
- const optionTitle = title.children;
+ const title = document.querySelector('#title');
  const otherJob = document.querySelector('#other-job-role');
-
+ const design = document.querySelector('#design');
+ const colorInput = document.querySelector('#color');
+ const actTotal = document.querySelector('#activities-cost');
+ const activities = document.querySelector('#activities');
+ const actBox = document.querySelector('#activities-box');
 /**
  * 
  * validators
  * 
  */
-// focus on the username input :
+// 1. focus on the username input :
+// 2. hiding the other job role input
+// 3. disable the color input 
 window.onload = function() {
     usernameInput.focus();
     otherJob.style.display = "none";
+    colorInput.disabled = true;
+    
 }
 
 //  can only contain letters a-z in lowercase
@@ -27,6 +34,7 @@ window.onload = function() {
     return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
  }
 
+ // hiding or showing the extra job input area
  function jobRoleDisplay() {
     if (title.value === 'other') {
         otherJob.style.display = "block";
@@ -36,7 +44,47 @@ window.onload = function() {
  }
  title.addEventListener('change', jobRoleDisplay);
 
+// design and color :
+function witchDesign(e) {
+    for (i = 0; i < colorInput.length; i++) {
+    let select = e.target.value;
+    let selectIndex = colorInput[i]
+    let select2 = selectIndex.getAttribute('data-theme');
+    if (select === select2) {
+        colorInput.disabled = false;
+        selectIndex.hidden = false;
+        selectIndex.selected = true;
+    } else {
+        colorInput.disabled = false;
+        selectIndex.hidden = true;
+        selectIndex.selected = false;
+    }
+}
+}
+design.addEventListener('change', witchDesign);
 
+//activity total cost 
+let totalCost = 0
+
+function changeCost(e) {
+    let cost = parseInt(e.target.getAttribute('data-cost'))
+    if (e.target.checked) {
+        totalCost += cost;
+    } else {
+        totalCost -= cost;
+    }
+    actTotal.textContent = `Total: $${totalCost}`;
+
+    // disabled same date and time class
+    for (i=1; i < actBox.length - 1; i++) {
+        let actboxIndex = actBox[i];
+
+    }
+}
+
+activities.addEventListener('change', changeCost);
+
+// 
 
 
  // set up events
