@@ -9,6 +9,8 @@
  const actTotal = document.querySelector('#activities-cost');
  const activities = document.querySelector('#activities');
  const actBox = document.querySelector('#activities-box');
+ const time = document.querySelectorAll('.timedate');
+ const form = document.querySelector('form');
 /**
  * 
  * validators
@@ -17,11 +19,16 @@
 // 1. focus on the username input :
 // 2. hiding the other job role input
 // 3. disable the color input 
+// 4. disable paypal tab
+// 5. disable bitcoin tab
+// 6. make credit card default choise
 window.onload = function() {
     usernameInput.focus();
     otherJob.style.display = "none";
     colorInput.disabled = true;
-    
+    payPal.style.display = "none";
+    bitCoin.style.display = "none";
+    payment.value = 'credit-card'
 }
 
 //  can only contain letters a-z in lowercase
@@ -85,7 +92,32 @@ function changeCost(e) {
 activities.addEventListener('change', changeCost);
 
 // 
+// removing other payment options after select
+const payment = document.querySelector('#payment');
+const creditCard = document.querySelector('#credit-card');
+const payPal = document.querySelector('#paypal');
+const bitCoin = document.querySelector('#bitcoin');
 
+function showOtherPayment(e) {
+    // showing only paypal info
+  if (payment.value === 'paypal') {
+    payPal.style.display = 'block';
+    bitCoin.style.display = 'none';
+    creditCard.style.display = "none";
+        // showing only bitcoin info
+  } else if (payment.value === 'bitcoin') {
+    bitCoin.style.display = 'block';
+    payPal.style.display = 'none';
+    creditCard.style.display = "none";
+    // showing credit card input info and hiding again the others
+  } else {
+    creditCard.style.display = "block";
+    payPal.style.display = 'none';
+    bitCoin.style.display = 'none';
+  }
+}
+
+payment.addEventListener('change', showOtherPayment);
 
  // set up events
  function showOrHideTip(show, element) {
@@ -111,6 +143,9 @@ activities.addEventListener('change', changeCost);
   emailInput.addEventListener("input", createListener(isValidEmail));
   
 
+//   form.addEventListener('submit' func);
+
+  
 //  // must containt a lowercase, uppercase letter and a number
 //  function isValidPassword(password) {
 //     return /[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password);
