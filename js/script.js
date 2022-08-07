@@ -178,23 +178,13 @@ function isValidCvv() {
     return validCvv;
 }
 
-function isActivityChecked(e) {
-    for(i=0; i < checkboxInput.length; i++) {
-      if (checkboxInput[i].checked === false) {
-          e.preventDefault();
-   }   else {
-    
-   }
-    }
-}
-
 form.addEventListener('submit', (e) => {
     if (!isValidName()) {
         e.preventDefault();
     }
     if (!isValidEmail()) {
         e.preventDefault();
-    }
+        }
     if (payment.value === 'credit-card') {
     if (!isValidCCNum()) {
         e.preventDefault();
