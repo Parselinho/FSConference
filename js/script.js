@@ -33,7 +33,7 @@ window.onload = function() {
 
 //  can only contain letters a-z in lowercase
  function isValidUserName(username) {
-    return /^[A-Za-z\d]+$/.test(username);
+    return /^[A-Za-z\s]+$/.test(username);
  }
 
   // must be a valid email address
@@ -143,7 +143,6 @@ payment.addEventListener('change', showOtherPayment);
   emailInput.addEventListener("input", createListener(isValidEmail));
   
 
-//   form.addEventListener('submit' func);
 
   
 //  // must containt a lowercase, uppercase letter and a number
