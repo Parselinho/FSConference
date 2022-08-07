@@ -1,6 +1,7 @@
  const usernameInput = document.querySelector('#name');
- const passwordInput = document.querySelector('#cc-num');
- const telephoneInput = document.querySelector('#cvv');
+ const ccNumber = document.querySelector('#cc-num');
+ const cvvInput = document.querySelector('#cvv');
+ const zip = document.querySelector('#zip');
  const emailInput = document.querySelector('#email');
  const title = document.querySelector('#title');
  const otherJob = document.querySelector('#other-job-role');
@@ -11,11 +12,8 @@
  const actBox = document.querySelector('#activities-box');
  const time = document.querySelectorAll('.timedate');
  const form = document.querySelector('form');
-/**
- * 
- * validators
- * 
- */
+ const checkboxInput = document.querySelectorAll("input[type='checkbox']")
+
 // 1. focus on the username input :
 // 2. hiding the other job role input
 // 3. disable the color input 
@@ -30,16 +28,6 @@ window.onload = function() {
     bitCoin.style.display = "none";
     payment.value = 'credit-card'
 }
-
-//  can only contain letters a-z in lowercase
- function isValidUserName(username) {
-    return /^[A-Za-z\s]+$/.test(username);
- }
-
-  // must be a valid email address
- function isValidEmail(email) {
-    return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
- }
 
  // hiding or showing the extra job input area
  function jobRoleDisplay() {
@@ -88,7 +76,6 @@ function changeCost(e) {
 
     }
 }
-
 activities.addEventListener('change', changeCost);
 
 // 
@@ -116,33 +103,186 @@ function showOtherPayment(e) {
     bitCoin.style.display = 'none';
   }
 }
-
 payment.addEventListener('change', showOtherPayment);
 
- // set up events
- function showOrHideTip(show, element) {
-    // show element when show is true, hide when false
-    if (show) {
-      element.style.display = "inherit";
-    } else {
-      element.style.display = "none";
-    }
-  }
-  
-  function createListener(validator) {
-    return e => {
-      const text = e.target.value;
-      const valid = validator(text);
-      const showTip = text !== "" && !valid;
-      const tooltip = e.target.nextElementSibling;
-      showOrHideTip(showTip, tooltip);
-    };
-  }
-  
-  usernameInput.addEventListener("input", createListener(isValidUserName));
-  emailInput.addEventListener("input", createListener(isValidEmail));
-  
+  // validation :
 
+function valid(element) {
+    element.parentNode.classList.add('valid');
+    element.parentNode.classList.remove('not-valid')
+    element.parentNode.lastElementChild.style.display = "none";
+  }
+  
+  function notvalid(element) {
+      element.parentNode.classList.add('not-valid');
+      element.parentNode.classList.remove('valid')
+      element.parentNode.lastElementChild.style.display = "block";
+  }
+// validators
+
+function isValidName() {
+    let name = usernameInput.value;
+    const validName = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(usernameInput.value);
+    if (!validName) {
+        notvalid(usernameInput);
+    } else {
+        valid(usernameInput);
+    }
+    return validName;
+}
+
+ function isValidEmail() {
+    let email = emailInput.value;
+    const validMail = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailInput.value);
+    if (!validMail) {
+        notvalid(emailInput);
+    } else {
+        valid(emailInput);
+    }
+    return validMail;
+ }
+ // creditcard must be 13-16
+ function isValidCCNum() {
+    let ccNum = ccNumber.value;
+    const validCcNum = /^\d{13,16}$/.test(ccNumber.value);
+    if (!validCcNum) {
+        notvalid(ccNumber);
+    } else {
+        valid(ccNumber);
+    }
+    return validCcNum;
+}
+
+// zip - 5 numbers
+function isValidZipCode() {
+    let zipCode = zip.value;
+    const validZip = /^\d{5}$/.test(zip.value);
+    if (!validZip) {
+        notvalid(zip);
+    } else {
+        valid(zip);
+    }
+    return validZip;
+}
+
+
+// The cvv must be 3 digits
+function isValidCvv() {
+    let cvv3 = cvv.value;
+    const validCvv = /^\d{3}$/.test(cvv.value);
+    if (!validCvv) {
+        notvalid(cvv);
+    } else {
+        valid(cvv);
+    }
+    return validCvv;
+}
+
+function isActivityChecked(e) {
+    for(i=0; i < checkboxInput.length; i++) {
+      if (checkboxInput[i].checked === false) {
+          e.preventDefault();
+   }   else {
+    
+   }
+    }
+}
+
+form.addEventListener('submit', (e) => {
+    if (!isValidName()) {
+        e.preventDefault();
+    }
+    if (!isValidEmail()) {
+        e.preventDefault();
+    }
+    if (payment.value === 'credit-card') {
+    if (!isValidCCNum()) {
+        e.preventDefault();
+    }
+    if (!isValidZipCode()) {
+        e.preventDefault();
+    }
+    if (!isValidCvv()) {
+        e.preventDefault();
+    }
+    }
+    })
+
+
+
+
+
+// //  // set up events
+// function showOrHideTip(show, element) {
+//     // show element when show is true, hide when false
+//     if (show) {
+//       element.style.display = "inherit";
+//     } else {
+//       element.style.display = "none";
+//     }
+//   }
+  
+//   function createListener(validator) {
+//     return e => {
+//       const text = e.target.value;
+//       const valid = validator(text);
+//       const showTip = text !== "" && !valid;
+//       const tooltip = e.target.nextElementSibling;
+//       showOrHideTip(showTip, tooltip);
+//     };
+//   }
+
+
+// usernameInput.addEventListener("input", createListener(isValidName));
+// emailInput.addEventListener("input", createListener(isValidEmail));
+// ccNumber.addEventListener('input', createListener(isValidCCNum));
+// zip.addEventListener('input', createListener(isValidZipCode));
+// cvvInput.addEventListener('input', createListener(isValidCvv));
+
+//   //  can only contain letters a-z in lowercase
+//   function isValidUserName(username) {
+//     return /^[A-Za-z\s]+$/.test(username);
+//  }
+
+//   // must be a valid email address
+//  function isValidEmail(email) {
+//     return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+//  }
+
+
+//   //  can only contain letters a-z in lowercase
+//   function isValidUserName(username) {
+//     return /^[A-Za-z\s]+$/.test(username);
+//  }
+
+//   // must be a valid email address
+//  function isValidEmail(email) {
+//     return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+//  }
+
+// // must choose 1 activity
+//  function isValidCheckbox() {
+//     let count = 0;
+//     for (i=0; i < checkboxInput.length; i++) {
+//         if (checkboxInput[i].checked === true) {
+//             count += 1;
+//         }
+//     }
+//     if (count !== 0) {
+//         activities.firstElementChild.className = "valid";
+//         activities.lastElementChild.display = "none";
+//         return true;
+//     } else {
+//         activities.firstElementChild.className = "not-valid"
+//         activities.lastElementChild.display = "block";
+//         return false;
+//     }
+//  }
+
+//   usernameInput.addEventListener("input", createListener(isValidUserName));
+//   emailInput.addEventListener("input", createListener(isValidEmail));
+  
+ 
 
   
 //  // must containt a lowercase, uppercase letter and a number
