@@ -216,6 +216,9 @@ form.addEventListener('submit', submitEvent);
        if (emailInput.value !== '') {
         emailInput.parentNode.lastElementChild.innerHTML = `<p>your email should look like : test@gmail.com</p>`;
        }
+       if (emailInput.value === '') {
+        emailInput.parentNode.lastElementChild.innerHTML = `<p>Email address must be formatted correctly</p>`
+       }
        if (isValidEmail()) {
         valid(emailInput);
        }
