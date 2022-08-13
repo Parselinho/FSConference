@@ -86,11 +86,12 @@ function changeCost(e) {
         checkboxInput[i].disabled = false;
         checkboxInput[i].parentNode.classList.remove('disabled');
         e.target.disabled = false;
-        e.target.parentElement.classList.add('disabled');
+        e.target.parentElement.classList.remove('disabled');
 
     } else if (eTargetData === dayTime && e.target.checked === false) {
         checkboxInput[i].disabled = false;
-        e.target.disabled = true;
+        e.target.disabled = false;
+        e.target.parentElement.classList.remove('disabled');
         checkboxInput[i].parentElement.classList.remove('disabled');
     }
    }
@@ -200,34 +201,12 @@ const checkError = document.querySelector('.activities-hint');
 
 
 
-form.addEventListener('keyup', (e) => {
-   if (!isValidName()) {
-    e.preventDefault();
-     }
-     if (selectedActivities.length === 0) {
-        activities.childNodes[1].className = 'not-valid';
-        checkError.style.display = 'block';
-     }
-    else {
-        activities.childNodes[1].className = 'valid';
-        checkError.style.display = "none";
-    }
-     if (payment.value === 'credit-card') {
-        if (!isValidCCNum()) {
-            e.preventDefault();
-        }
-        if (!isValidZipCode()) {
-            e.preventDefault();
-        }
-        if (!isValidCvv()) {
-            e.preventDefault();
-        }
-        }
-        });
+form.addEventListener('keyup', submitEvent);
+
+form.addEventListener('submit', submitEvent);
 
 
-
-form.addEventListener('submit', (e) => {
+    function submitEvent(e) {
    if (!isValidName()) {
        e.preventDefault();
    }
@@ -254,7 +233,7 @@ form.addEventListener('submit', (e) => {
        e.preventDefault();
    }
    }
-   });
+   }
 
 
    // Accessibility
