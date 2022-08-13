@@ -8,3 +8,7 @@ opposite.
 i use those 2 functions 'all in' to check all the inputs (except the activities) in the change event listener and the keyup eventlistener. 
 
 in the keyup eventlistener i wanted to specifay everything that need to be filled out so i 'triggered' all the errors\not-valid messages.
+
+
+I also used a real time valiidation and added conditional error message: the email input field uses real time validation and conditional error message,
+when the input field is empty there is a text, and when you type something in the input field, the text change, to help you understand how your email should look like.
