@@ -126,13 +126,13 @@ function showOtherPayment(e) {
 payment.addEventListener('change', showOtherPayment);
 
  // validation :
-
+// add valid class, remove not valid, and hiding the 'error' message
 function valid(element) {
    element.parentNode.classList.add('valid');
    element.parentNode.classList.remove('not-valid');
    element.parentNode.lastElementChild.style.display = "none";
  }
- 
+ // add not-valid class, remove valid, displaying error message
  function notvalid(element) {
      element.parentNode.classList.add('not-valid');
      element.parentNode.classList.remove('valid');
