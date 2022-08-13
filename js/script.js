@@ -79,14 +79,17 @@ function changeCost(e) {
     if (eTargetData === dayTime && e.target.checked === true) {
         checkboxInput[i].disabled = true;
         e.target.removeAttribute('disabled');
+        e.target.parentElement.classList.remove('disabled');
 
     } else if (eTargetData !== dayTime && checkboxInput[i].disabled === false) {
         checkboxInput[i].removeAttribute('disabled')
         e.target.enabled = true;
+        e.target.parentElement.classList.add('disabled');
 
     } else if (eTargetData === dayTime && e.target.checked === false) {
         checkboxInput[i].disabled = false;
         e.target.enabled = false;
+        e.target.parentElement.classList.remove('disabled');
     }
    }
 }
