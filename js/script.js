@@ -213,6 +213,12 @@ form.addEventListener('submit', submitEvent);
    if (!isValidEmail()) {
        e.preventDefault();
        }
+       if (emailInput.value !== '') {
+        emailInput.parentNode.lastElementChild.innerHTML = `<p>your email should look like : test@gmail.com</p>`;
+       }
+       if (isValidEmail()) {
+        valid(emailInput);
+       }
     if (selectedActivities.length === 0) {
         activities.childNodes[1].className = 'not-valid';
         checkError.style.display = 'block';
