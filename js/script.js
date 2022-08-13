@@ -199,6 +199,34 @@ const selectedActivities = document.querySelectorAll('[type="checkbox"]:checked'
 const checkError = document.querySelector('.activities-hint');
 
 
+
+form.addEventListener('keyup', (e) => {
+   if (!isValidName()) {
+    e.preventDefault();
+     }
+     if (selectedActivities.length === 0) {
+        activities.childNodes[1].className = 'not-valid';
+        checkError.style.display = 'block';
+     }
+    else {
+        activities.childNodes[1].className = 'valid';
+        checkError.style.display = "none";
+    }
+     if (payment.value === 'credit-card') {
+        if (!isValidCCNum()) {
+            e.preventDefault();
+        }
+        if (!isValidZipCode()) {
+            e.preventDefault();
+        }
+        if (!isValidCvv()) {
+            e.preventDefault();
+        }
+        }
+        });
+
+
+
 form.addEventListener('submit', (e) => {
    if (!isValidName()) {
        e.preventDefault();
