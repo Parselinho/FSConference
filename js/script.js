@@ -10,7 +10,6 @@ const colorInput = document.querySelector('#color');
 const actTotal = document.querySelector('#activities-cost');
 const activities = document.querySelector('#activities');
 const actBox = document.querySelector('#activities-box');
-const time = document.querySelectorAll('.timedate');
 const form = document.querySelector('form');
 const checkboxInput = document.querySelectorAll("input[type='checkbox']");
 
@@ -59,7 +58,8 @@ function witchDesign(e) {
 design.addEventListener('change', witchDesign);
 
 //activity total cost 
-let totalCost = 0
+let totalCost = 0;
+
 
 function changeCost(e) {
    let cost = parseInt(e.target.getAttribute('data-cost'));
@@ -71,9 +71,23 @@ function changeCost(e) {
    actTotal.textContent = `Total: $${totalCost}`;
 
    // disabled same date and time class
-   for (i=1; i < actBox.length - 1; i++) {
-       let actboxIndex = actBox[i];
+   for (i=0; i < checkboxInput.length; i++) {
 
+    let dayTime = checkboxInput[i].dataset.dayAndTime
+    let eTargetData = e.target.dataset.dayAndTime;
+
+    if (eTargetData === dayTime && e.target.checked === true) {
+        checkboxInput[i].disabled = true;
+        e.target.removeAttribute('disabled');
+
+    } else if (eTargetData !== dayTime && checkboxInput[i].disabled === false) {
+        checkboxInput[i].removeAttribute('disabled')
+        e.target.enabled = true;
+
+    } else if (eTargetData === dayTime && e.target.checked === false) {
+        checkboxInput[i].disabled = false;
+        e.target.enabled = false;
+    }
    }
 }
 activities.addEventListener('change', changeCost);
@@ -217,9 +231,9 @@ form.addEventListener('submit', (e) => {
 
    checkboxInput[i].addEventListener('focus', (e) => {
     e.target.parentElement.classList.add('focus');
-   })
+   });
 
    checkboxInput[i].addEventListener('blur', (e) => {
     e.target.parentElement.classList.remove('focus');
-   })
+   });
    }
