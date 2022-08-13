@@ -201,10 +201,23 @@ const checkError = document.querySelector('.activities-hint');
 
 
 
-form.addEventListener('keyup', submitEvent);
+form.addEventListener('keyup', keyupEvent);
 
 form.addEventListener('submit', submitEvent);
 
+
+
+   function keyupEvent(e) {
+    if (emailInput.value !== '') {
+        emailInput.parentNode.lastElementChild.innerHTML = `<p>your email should look like : test@gmail.com</p>`;
+       }
+    if (emailInput.value === '') {
+        emailInput.parentNode.lastElementChild.innerHTML = `<p>Email address must be formatted correctly</p>`
+       }
+    if (isValidEmail()) {
+        valid(emailInput);
+       }
+   }
 
     function submitEvent(e) {
    if (!isValidName()) {
@@ -212,15 +225,6 @@ form.addEventListener('submit', submitEvent);
    }
    if (!isValidEmail()) {
        e.preventDefault();
-       }
-       if (emailInput.value !== '') {
-        emailInput.parentNode.lastElementChild.innerHTML = `<p>your email should look like : test@gmail.com</p>`;
-       }
-       if (emailInput.value === '') {
-        emailInput.parentNode.lastElementChild.innerHTML = `<p>Email address must be formatted correctly</p>`
-       }
-       if (isValidEmail()) {
-        valid(emailInput);
        }
     if (selectedActivities.length === 0) {
         activities.childNodes[1].className = 'not-valid';
